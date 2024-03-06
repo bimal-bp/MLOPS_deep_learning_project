@@ -1,18 +1,24 @@
-import logging
 import os
-from datetime import datetime
+import sys
+import logging
 
-LOG_FILE=f"{datetime.now().strftime('%m_%d_%Y_%H_%M_%S')}.log"
+logging_str="[%(asctime)s: %(levelname)s: %(module)s: %(message)s]"
 
-log_path=os.path.join(os.getcwd(),"logs")
-
-os.makedirs(log_path,exist_ok=True)
-
-LOG_FILEPATH=os.path.join(log_path,LOG_FILE)
+log_dir="logs"
+log_filepath=os.path.join(log_dir,"running_logs.log")
+os.makedirs(log_dir,exist_ok=True)
 
 
-logging.basicConfig(level=logging.INFO, 
-                    filename=LOG_FILEPATH,
-                    format="[%(asctime)s] %(lineno)d %(name)s - %(levelname)s - %(message)s"
-                    
+logging.basicConfig(
+    level=logging.INFO,
+    format=logging_str,
+
+    handlers=[
+        logging.FileHandler(log_filepath),
+        logging.StreamHandler(sys.stdout)
+    ]
 )
+logger=logging.getLogger("mlProjectLogger")
+
+if __name__=="__main__":
+    logging.info("Logging work correctly")
