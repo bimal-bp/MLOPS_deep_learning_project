@@ -1,0 +1,17 @@
+service: "xray.ml.model.model_service:svc"
+
+labels:
+    owner: bimal-bp
+    stage: dev 
+  include:
+    - "xray/ml/model_service.py"
+    - "xray/constant/training_pipeline/__init__.py"
+
+  python:
+    packages:
+      - torch 
+      - torchvision
+      - pillow
+      - numpy
+    extra_index_url:
+      - "https://download.pytorch.org/whl/cpu"
